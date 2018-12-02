@@ -70,7 +70,7 @@ ExcelSheet.prototype.render = function(){
             } else if (j === 0 && (i > 0)) {
                 row.insertCell(j).innerHTML = `<input style="width:88px;" class="excel-row-header" type="text" disabled data-row=${i} data-column=${j} value="${i}"/><input id="${i}" type="button" class="btn btn-sec delete-row" value="Delete">`;
             }else if(i===0 && j===0){
-                 row.insertCell(j).innerHTML = `<input type="text" class="excel-header" disabled data-row=${i} data-column=${j} value=""/>`;
+                 row.insertCell(j).innerHTML = `<input style="background-color: #eee;" type="text" class="excel-header" disabled data-row=${i} data-column=${j} value=""/>`;
             }else{
             row.insertCell(j).innerHTML = `<input class="excel-input" type="text" data-row=${i} data-column=${j} value="${excel.data[i][j]}"/>`;
             }
