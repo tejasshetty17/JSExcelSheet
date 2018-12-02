@@ -2,18 +2,17 @@ const TABLE = document.getElementById('excel-sheet');
 const ADDROWBUTTON = document.getElementById('add-row');
 const ADDCOLUMNBUTTON = document.getElementById('add-column');
 
-function ExcelSheet(element, data, rows, columns) {
-  this.element = element; // elem should be an ID
-  this.rows = rows || 90;
-  this.columns = columns || 20;
+function ExcelSheet(data, rows, columns) {
+  this.rows = rows || 50;
+  this.columns = columns || 10;
   this.data = data || [];
   this.initializeData = () =>{
-    if(data){
-        return;
+    if(this.data.length > 0){
+        return;  // return if data exists in localStorage
     }
     for(let i = 0; i <=this.rows; i++){
         this.data[i] = [];
-        for(let j = 0; j <= this.columns; j++){
+        for(let j = 0; j <= this.columns; j++){  // else initialize with empty string
             this.data[i][j] = '';
         }
     }
@@ -22,7 +21,7 @@ function ExcelSheet(element, data, rows, columns) {
 }
 
 
-ExcelSheet.prototype.deleteColumn = function (element) {
+ExcelSheet.prototype.deleteColumn = function (element) {  // adding commom functions to prototype to prevent memory inefficiency
     let column = Number(element.id);
     for(let i = 1; i<=excel.rows; i++){
         excel.data[i].splice(column,1);
@@ -80,7 +79,7 @@ ExcelSheet.prototype.render = function(){
 };
 
 ExcelSheet.prototype.initEvent = function(){
- TABLE.addEventListener('click', function(e){
+ TABLE.addEventListener('click', function(e){   // event delegation for delete row and delete column
      let element = e.target;
      if(element.classList.contains('delete-row')){
          e.stopPropagation();
@@ -92,7 +91,7 @@ ExcelSheet.prototype.initEvent = function(){
          saveData();
      }
  });
- TABLE.addEventListener('keyup', function(e){
+ TABLE.addEventListener('keyup', function(e){  // event handler for saving on every key stroke, could be further improved to save after every 3 or 4 keystrokes.
      e.stopPropagation();
      let element = e.target;
      let row = element.getAttribute("data-row");
