@@ -1,4 +1,6 @@
 const TABLE = document.getElementById('excel-sheet');
+const ADDROWBUTTON = document.getElementById('add-row');
+const ADDCOLUMNBUTTON = document.getElementById('add-column');
 
 function ExcelSheet(element, rows, columns, data) {
   this.element = element; // elem should be an ID
@@ -34,10 +36,26 @@ ExcelSheet.prototype.deleteRow = function(element){
 }
 
 ExcelSheet.prototype.addRow = function() {
-    excel.rows += 1;
-    for(let ){
-        
+    let rowNumber = excel.rows += 1;
+    let row = TABLE.insertRow(excel.rows);
+    excel.data.push([]);
+    excel.data[rowNumber].push([]);
+    for(let j = 0; j<=this.columns; j++ ){
+        excel.data[rowNumber][j] = '';
+        if(j === 0){
+            row.insertCell(j).innerHTML = `<input style="width:88px;" class="excel-row-header" type="text" disabled data-row=${rowNumber} data-column=${j} value="${rowNumber}"/><input id="${rowNumber}" type="button" class="btn btn-sec delete-row" value="Delete">`;
+        }else{
+             row.insertCell(j).innerHTML = `<input class="excel-input" type="text" data-row=${rowNumber} data-column=${j} value="${this.data[rowNumber][j]}"/>`;
+        }
     }
+}
+
+ExcelSheet.prototype.addColumn = function(){
+    excel.columns += 1;
+    for(let i = 0; i<=excel.rows; i++){
+        excel.data[i].push('');
+    }
+    excel.render();
 }
 
 ExcelSheet.prototype.render = function(){
@@ -69,10 +87,22 @@ ExcelSheet.prototype.initEvent = function(){
          excel.deleteColumn(element);
      }
  });
+ TABLE.addEventListener('keyup', function(e){
+     e.stopPropagation();
+     let element = e.target;
+     let row = element.getAttribute("data-row");
+     let column = element.getAttribute('data-column');
+     console.log(element.value);
+     excel.data[row][column] = element.value;
+ });
+ ADDROWBUTTON.addEventListener('click',function(e){
+     e.stopPropagation();
+    excel.addRow();
+ });
+ ADDCOLUMNBUTTON.addEventListener('click', function (e) {
+     e.stopPropagation();
+     excel.addColumn();
+ });
 }
-
-let excel = new ExcelSheet('excel-sheet');
-excel.render();
-excel.initEvent();
 
 
