@@ -1,0 +1,79 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+
+
+td {
+    border: 1px solid #dddddd;
+}
+
+.tool-bar {
+    margin: 20px;
+}
+
+
+input[type=text] {
+    border: 1px solid #fff;
+    width: inherit;
+    font-size: 14px;
+    padding: 2px;
+}
+
+input[type=text]:hover {
+    background-color: #eee;
+}
+
+.btn {
+    border-radius: 2px;
+    padding: 4px 14px;
+    color: #fff;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background-color: #008aff;
+    border-color: #008aff;
+}
+
+.btn-sec {
+    background-color: #e25757;
+    border-color: #e25757;
+}
+
+.btn:focus {
+    outline: none;
+}
+
+.excel-sheet {
+    border-collapse: collapse;
+}
+
+
+.app-wrapper {
+     width: 100vw;
+     height: 100vh;
+     overflow-x: scroll;
+     overflow-y: scroll;
+}
+
+td {
+    border: 1px solid #dddddd;
+    padding: 0;
+}
+
+.excel-row-header{
+ background-color: #eee;
+ font-size: 14px;
+ text-align: center;
+ color: #464646;
+}
+
+.excel-column-header {
+    background-color: #eee;
+    font-size: 14px;
+    text-align: center;
+    color: #464646;
+}
