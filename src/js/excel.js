@@ -2,12 +2,17 @@ const TABLE = document.getElementById('excel-sheet');
 const ADDROWBUTTON = document.getElementById('add-row');
 const ADDCOLUMNBUTTON = document.getElementById('add-column');
 
-function ExcelSheet(element, rows, columns, data) {
+function ExcelSheet(element, data, rows, columns) {
+    console.log(rows,columns);
   this.element = element; // elem should be an ID
   this.rows = rows || 90;
   this.columns = columns || 20;
   this.data = data || [];
+  console.log(this.rows,this.columns);
   this.initializeData = () =>{
+    if(data){
+        return;
+    }
     for(let i = 0; i <=this.rows; i++){
         this.data[i] = [];
         for(let j = 0; j <= this.columns; j++){
@@ -63,6 +68,7 @@ ExcelSheet.prototype.render = function(){
     for(let i = 0; i <= this.rows; i++){
         let row = TABLE.insertRow(i);
         for(let j = 0; j <= this.columns; j++){
+            console.log(excel.data[i][j]);
             if(i===0 && (j > 0)){
                 row.insertCell(j).innerHTML = `<input style="width:88px;" class="excel-column-header" type="text" disabled data-row=${i} data-column=${j} value="${String.fromCharCode(j + 64)}"/><input id="${j}" type="button" class="btn btn-sec delete-column" value="Delete">`;
             } else if (j === 0 && (i > 0)) {
@@ -70,7 +76,7 @@ ExcelSheet.prototype.render = function(){
             }else if(i===0 && j===0){
                  row.insertCell(j).innerHTML = `<input type="text" class="excel-header" disabled data-row=${i} data-column=${j} value=""/>`;
             }else{
-            row.insertCell(j).innerHTML = `<input class="excel-input" type="text" data-row=${i} data-column=${j} value="${this.data[i][j]}"/>`;
+            row.insertCell(j).innerHTML = `<input class="excel-input" type="text" data-row=${i} data-column=${j} value="${excel.data[i][j]}"/>`;
             }
         }
     }
@@ -82,9 +88,11 @@ ExcelSheet.prototype.initEvent = function(){
      if(element.classList.contains('delete-row')){
          e.stopPropagation();
          excel.deleteRow(element);
+         saveData();
      } else if (element.classList.contains('delete-column')) {
          e.stopPropagation();
          excel.deleteColumn(element);
+         saveData();
      }
  });
  TABLE.addEventListener('keyup', function(e){
@@ -92,16 +100,18 @@ ExcelSheet.prototype.initEvent = function(){
      let element = e.target;
      let row = element.getAttribute("data-row");
      let column = element.getAttribute('data-column');
-     console.log(element.value);
      excel.data[row][column] = element.value;
+     saveData();
  });
  ADDROWBUTTON.addEventListener('click',function(e){
      e.stopPropagation();
     excel.addRow();
+    saveData();
  });
  ADDCOLUMNBUTTON.addEventListener('click', function (e) {
      e.stopPropagation();
      excel.addColumn();
+     saveData();
  });
 }
 
