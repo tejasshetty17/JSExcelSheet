@@ -22,7 +22,7 @@ function ExcelSheet(data, rows, columns) {
 
 
 ExcelSheet.prototype.deleteColumn = function (element) {  // adding commom functions to prototype to prevent memory inefficiency
-    let column = Number(element.id);
+    let column = element.getAttribute('data-column');
     for(let i = 1; i<=excel.rows; i++){
         excel.data[i].splice(column,1);
     }
@@ -31,13 +31,13 @@ ExcelSheet.prototype.deleteColumn = function (element) {  // adding commom funct
 }
 
 ExcelSheet.prototype.deleteRow = function(element){
-    let row = Number(element.id);
+    let row = Number(element.getAttribute("data-row"));
     excel.data.splice(row, 1);
     excel.rows -= 1;
     excel.render();
 }
 
-ExcelSheet.prototype.addRow = function() {
+ExcelSheet.prototype.addRow = function(addTo) {
     let rowNumber = excel.rows += 1;
     let row = TABLE.insertRow(excel.rows);
     excel.data.push([]);
@@ -45,14 +45,14 @@ ExcelSheet.prototype.addRow = function() {
     for(let j = 0; j<=this.columns; j++ ){
         excel.data[rowNumber][j] = '';
         if(j === 0){
-            row.insertCell(j).innerHTML = `<input style="width:88px;" class="excel-row-header" type="text" disabled data-row=${rowNumber} data-column=${j} value="${rowNumber}"/><input id="${rowNumber}" type="button" class="btn btn-sec delete-row" value="Delete">`;
+            row.insertCell(j).innerHTML = `<input class="excel-row-header" type="text" disabled data-row=${rowNumber} data-column=${j} value="${rowNumber}"/>`;
         }else{
              row.insertCell(j).innerHTML = `<input class="excel-input" type="text" data-row=${rowNumber} data-column=${j} value="${this.data[rowNumber][j]}"/>`;
         }
     }
 }
 
-ExcelSheet.prototype.addColumn = function(){
+ExcelSheet.prototype.addColumn = function(addTo){
     excel.columns += 1;
     for(let i = 0; i<=excel.rows; i++){
         excel.data[i].push('');
@@ -66,9 +66,9 @@ ExcelSheet.prototype.render = function(){
         let row = TABLE.insertRow(i);
         for(let j = 0; j <= this.columns; j++){
             if(i===0 && (j > 0)){
-                row.insertCell(j).innerHTML = `<input style="width:88px;" class="excel-column-header" type="text" disabled data-row=${i} data-column=${j} value="${String.fromCharCode(j + 64)}"/><input id="${j}" type="button" class="btn btn-sec delete-column" value="Delete">`;
+                row.insertCell(j).innerHTML = `<input class="excel-column-header" type="text" disabled data-row=${i} data-column=${j} value="${String.fromCharCode(j + 64)}"/>`;
             } else if (j === 0 && (i > 0)) {
-                row.insertCell(j).innerHTML = `<input style="width:88px;" class="excel-row-header" type="text" disabled data-row=${i} data-column=${j} value="${i}"/><input id="${i}" type="button" class="btn btn-sec delete-row" value="Delete">`;
+                row.insertCell(j).innerHTML = `<input class="excel-row-header" type="text" disabled data-row=${i} data-column=${j} value="${i}"/>`;
             }else if(i===0 && j===0){
                  row.insertCell(j).innerHTML = `<input style="background-color: #eee;" type="text" class="excel-header" disabled data-row=${i} data-column=${j} value=""/>`;
             }else{
@@ -79,18 +79,18 @@ ExcelSheet.prototype.render = function(){
 };
 
 ExcelSheet.prototype.initEvent = function(){
- TABLE.addEventListener('click', function(e){   // event delegation for delete row and delete column
-     let element = e.target;
-     if(element.classList.contains('delete-row')){
-         e.stopPropagation();
-         excel.deleteRow(element);
-         saveData();
-     } else if (element.classList.contains('delete-column')) {
-         e.stopPropagation();
-         excel.deleteColumn(element);
-         saveData();
-     }
- });
+//  TABLE.addEventListener('click', function(e){   // event delegation for delete row and delete column
+//      let element = e.target;
+//      if(element.classList.contains('delete-row')){
+//          e.stopPropagation();
+//         //  excel.deleteRow(element);
+//         //  saveData();
+//      } else if (element.classList.contains('delete-column')) {
+//          e.stopPropagation();
+//         //  excel.deleteColumn(element);
+//         //  saveData();
+//      }
+//  });
  TABLE.addEventListener('keyup', function(e){  // event handler for saving on every key stroke, could be further improved to save after every 3 or 4 keystrokes.
      e.stopPropagation();
      let element = e.target;

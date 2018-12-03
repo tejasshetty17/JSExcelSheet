@@ -4,8 +4,6 @@
     box-sizing: border-box;
 }
 
-
-
 td {
     border: 1px solid #dddddd;
 }
@@ -51,7 +49,6 @@ input[type=text]:hover {
     border-collapse: collapse;
 }
 
-
 .app-wrapper {
      width: 100vw;
      height: 100vh;
@@ -76,4 +73,29 @@ td {
     font-size: 14px;
     text-align: center;
     color: #464646;
+}
+
+.menu {
+  width: 170px;
+  box-shadow: 0 4px 5px 3px rgba(0, 0, 0, 0.2);
+  position: absolute;
+  display: none;
+  background-color: white;
+}
+
+.menu .menu-options {
+    list-style: none;
+    padding: 10px 0;
+    /* width: 150px; */
+}
+
+.menu .menu-options li {
+    font-weight: 500;
+    font-size: 14px;
+    padding: 5px 20px 5px 20px !important;
+    cursor: pointer !important;
+}
+
+.menu .menu-options .menu-option:hover {
+background: rgba(0, 0, 0, 0.2);
 }
