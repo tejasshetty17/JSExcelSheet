@@ -22,9 +22,9 @@ function saveData(){  // function for saving data into localStorage this functio
 
 function contextMenuHandler(){
     if(CONTEXTMENU.contextOption === 'Insert Column Left'){
-        // excel.addColumn('left');
+        excel.addColumn('left');
     }else if(CONTEXTMENU.contextOption === 'Insert Column Right'){
-        // excel.addColumn('right');
+        excel.addColumn('right');
     }else if(CONTEXTMENU.contextOption === 'Insert Row Top'){
         excel.addRow('top');
     }else if(CONTEXTMENU.contextOption === 'Insert Row Bottom'){
@@ -69,5 +69,4 @@ window.addEventListener("contextmenu", e => {
   if (e.target.tagName.toUpperCase() !== 'INPUT') return;
   setPosition(origin);
   CONTEXTMENU.context = e.target;
-  console.log(CONTEXTMENU.context,'iehbwfjhwbev');
 });

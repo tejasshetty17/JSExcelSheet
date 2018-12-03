@@ -44,25 +44,23 @@ ExcelSheet.prototype.addRow = function(addTo) {
     }else if(addTo === 'bottom'){
         rowNumber = Number(CONTEXTMENU.context.getAttribute("data-row")) + 1;
     }
-    let row = TABLE.insertRow(rowNumber);
     excel.data.splice(rowNumber,0,[]);
-    // excel.data.push([]);
     excel.data[rowNumber].push([]);
     for(let j = 0; j<=this.columns; j++ ){
         excel.data[rowNumber][j] = '';
-        // if(j === 0){
-        //     row.insertCell(j).innerHTML = `<input class="excel-row-header" type="text" disabled data-row=${rowNumber} data-column=${j} value="${rowNumber}"/>`;
-        // }else{
-        //      row.insertCell(j).innerHTML = `<input class="excel-input" type="text" data-row=${rowNumber} data-column=${j} value="${this.data[rowNumber][j]}"/>`;
-        // }
     }
     excel.render();
 }
 
 ExcelSheet.prototype.addColumn = function(addTo){
-    excel.columns += 1;
+    let columnNumber = excel.columns += 1;
+    if (addTo === 'left') {
+         columnNumber = Number(CONTEXTMENU.context.getAttribute("data-column"));
+    } else if (addTo === 'right') {
+         columnNumber = Number(CONTEXTMENU.context.getAttribute("data-column")) + 1;
+    }
     for(let i = 0; i<=excel.rows; i++){
-        excel.data[i].push('');
+        excel.data[i].splice(columnNumber,0,'');
     }
     excel.render();
 }
@@ -86,18 +84,6 @@ ExcelSheet.prototype.render = function(){
 };
 
 ExcelSheet.prototype.initEvent = function(){
-//  TABLE.addEventListener('click', function(e){   // event delegation for delete row and delete column
-//      let element = e.target;
-//      if(element.classList.contains('delete-row')){
-//          e.stopPropagation();
-//         //  excel.deleteRow(element);
-//         //  saveData();
-//      } else if (element.classList.contains('delete-column')) {
-//          e.stopPropagation();
-//         //  excel.deleteColumn(element);
-//         //  saveData();
-//      }
-//  });
  TABLE.addEventListener('keyup', function(e){  // event handler for saving on every key stroke, could be further improved to save after every 3 or 4 keystrokes.
      e.stopPropagation();
      let element = e.target;
