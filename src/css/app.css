@@ -51,7 +51,7 @@ input[type=text]:hover {
 
 .app-wrapper {
      width: 100vw;
-     height: 100vh;
+     height: 80vh;
      overflow-x: scroll;
      overflow-y: scroll;
 }
@@ -81,11 +81,16 @@ td {
   position: absolute;
   display: none;
   background-color: white;
+  overflow-y: scroll;
 }
 
 .menu .menu-options {
     list-style: none;
     padding: 10px 0;
+    border: 0.5px solid black;
+    /* border-collapse: collapse; */
+    /* height:190px; */
+   /*  overflow-y: scroll; */
     /* width: 150px; */
 }
 
@@ -94,6 +99,8 @@ td {
     font-size: 14px;
     padding: 5px 20px 5px 20px !important;
     cursor: pointer !important;
+    border-bottom: 0.5px solid black;
+    /* border-collapse: collapse; */
 }
 
 .menu .menu-options .menu-option:hover {

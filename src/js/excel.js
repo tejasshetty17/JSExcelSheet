@@ -39,17 +39,24 @@ ExcelSheet.prototype.deleteRow = function(element){
 
 ExcelSheet.prototype.addRow = function(addTo) {
     let rowNumber = excel.rows += 1;
-    let row = TABLE.insertRow(excel.rows);
-    excel.data.push([]);
+    if(addTo === 'top'){
+        rowNumber = Number(CONTEXTMENU.context.getAttribute("data-row"));
+    }else if(addTo === 'bottom'){
+        rowNumber = Number(CONTEXTMENU.context.getAttribute("data-row")) + 1;
+    }
+    let row = TABLE.insertRow(rowNumber);
+    excel.data.splice(rowNumber,0,[]);
+    // excel.data.push([]);
     excel.data[rowNumber].push([]);
     for(let j = 0; j<=this.columns; j++ ){
         excel.data[rowNumber][j] = '';
-        if(j === 0){
-            row.insertCell(j).innerHTML = `<input class="excel-row-header" type="text" disabled data-row=${rowNumber} data-column=${j} value="${rowNumber}"/>`;
-        }else{
-             row.insertCell(j).innerHTML = `<input class="excel-input" type="text" data-row=${rowNumber} data-column=${j} value="${this.data[rowNumber][j]}"/>`;
-        }
+        // if(j === 0){
+        //     row.insertCell(j).innerHTML = `<input class="excel-row-header" type="text" disabled data-row=${rowNumber} data-column=${j} value="${rowNumber}"/>`;
+        // }else{
+        //      row.insertCell(j).innerHTML = `<input class="excel-input" type="text" data-row=${rowNumber} data-column=${j} value="${this.data[rowNumber][j]}"/>`;
+        // }
     }
+    excel.render();
 }
 
 ExcelSheet.prototype.addColumn = function(addTo){

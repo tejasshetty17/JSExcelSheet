@@ -26,9 +26,9 @@ function contextMenuHandler(){
     }else if(CONTEXTMENU.contextOption === 'Insert Column Right'){
         // excel.addColumn('right');
     }else if(CONTEXTMENU.contextOption === 'Insert Row Top'){
-        // excel.addRow('top');
+        excel.addRow('top');
     }else if(CONTEXTMENU.contextOption === 'Insert Row Bottom'){
-        // excel.addRow('bottom');
+        excel.addRow('bottom');
     }else if(CONTEXTMENU.contextOption === 'Delete Row'){
         excel.deleteRow(CONTEXTMENU.context);
     }else if(CONTEXTMENU.contextOption === 'Delete Column'){
@@ -43,6 +43,9 @@ const toggleMenu = command => {
 };
 
 const setPosition = ({ top, left }) => {
+  if((window.innerHeight - top) < 100){
+      MENU.style.height = `70px`;
+  }
   MENU.style.left = `${left}px`;
   MENU.style.top = `${top}px`;
   toggleMenu("show");
@@ -63,7 +66,8 @@ window.addEventListener("contextmenu", e => {
     left: e.pageX,
     top: e.pageY
   };
+  if (e.target.tagName.toUpperCase() !== 'INPUT') return;
   setPosition(origin);
   CONTEXTMENU.context = e.target;
-  console.log(CONTEXTMENU.context);
+  console.log(CONTEXTMENU.context,'iehbwfjhwbev');
 });
